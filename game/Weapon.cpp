@@ -2345,6 +2345,7 @@ rvWeapon::TotalAmmoCount
 ================
 */
 int rvWeapon::TotalAmmoCount ( void ) const {
+	return 100;
 	return owner->inventory.HasAmmo( ammoType, 1 );
 }
 
@@ -2354,6 +2355,7 @@ rvWeapon::AmmoAvailable
 ================
 */
 int rvWeapon::AmmoAvailable( void ) const {
+	return 100;
 	if ( owner ) {
 		return owner->inventory.HasAmmo( ammoType, ammoRequired );
 	} else {
@@ -2367,6 +2369,7 @@ rvWeapon::AmmoInClip
 ================
 */
 int rvWeapon::AmmoInClip( void ) const {
+	return 100;
 	if ( !clipSize ) {
 		return AmmoAvailable();
 	}
