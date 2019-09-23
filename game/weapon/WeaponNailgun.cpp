@@ -670,7 +670,7 @@ stateResult_t rvWeaponNailgun::State_Fire( const stateParms_t& parms ) {
 				Attack ( true, 1, spread, 0.0f, 1.0f );
 				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			} else {
-				Attack ( false, 1, spread, 0.0f, 1.0f );
+				Attack ( false, 1, 10, 0.5f, 1.0f );
 				nextAttackTime = gameLocal.time + 1; //+ (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			}
 			
@@ -730,7 +730,8 @@ stateResult_t rvWeaponNailgun::State_Reload ( const stateParms_t& parms ) {
 		STAGE_RELOADRIGHTWAIT,
 		STAGE_RELOADDONE,
 		STAGE_RELOADDONEWAIT,		
-	};	
+	};
+
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			if ( DrumSpin ( NAILGUN_DRUMSPEED_STOPPED, parms.blendFrames ) ) {
