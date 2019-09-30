@@ -407,7 +407,7 @@ bool rvAIMedic::CheckTakePatient( idPlayer* player )
 								dict.Set("angle", va("%f", yaw + 180));
 								dict.Set("origin", org.ToString());
 								gameLocal.SpawnEntityDef(dict, &newEnt);
-								//newEnt->dormantStart = 20;
+								newEnt->dormantStart = 20;
 							}
 							return true;
 						}

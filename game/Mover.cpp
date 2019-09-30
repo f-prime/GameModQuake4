@@ -4128,6 +4128,7 @@ idDoor::Spawn
 ================
 */
 void idDoor::Spawn( void ) {
+	return; // Frankie: Prevent opening of doors
 	idVec3		abs_movedir;
 	float		distance;
 	idVec3		size;

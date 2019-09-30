@@ -9068,7 +9068,7 @@ void idMultiplayerGame::OpenLocalBuyMenu( void )
 
 	if ( currentMenu == 4 )
 		return; // Already open
-
+	
 	gameLocal.sessionCommand = "game_startmenu";
 	gameLocal.mpGame.nextMenu = 4;
 }
