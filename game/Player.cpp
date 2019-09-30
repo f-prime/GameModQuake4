@@ -2330,6 +2330,8 @@ void idPlayer::Save( idSaveGame *savefile ) const {
 	// TOSAVE: const idDeclEntityDef*	cachedWeaponDefs [ MAX_WEAPONS ];	// cnicholson: Save these?
 	// TOSAVE: const idDeclEntityDef*	cachedPowerupDefs [ POWERUP_MAX ];
 
+
+
 #ifndef _XENON
  	if ( hud ) {
 		hud->SetStateString( "message", common->GetLocalizedString( "#str_102916" ) );

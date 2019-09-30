@@ -348,6 +348,7 @@ void rvAIMedic::DropPatient( void )
 
 void rvAIMedic::SetHealValues( idPlayer* player )
 {
+
 	if ( !player )
 	{
 		return;
@@ -380,9 +381,9 @@ bool rvAIMedic::CheckTakePatient( idPlayer* player )
 	}
 	SetHealValues( player );
 
-	if ( curHealValue < maxPatientValue )
+	if ( true )//curHealValue < maxPatientValue )
 	{//they are hurt
-		if ( curHealValue <= minHealValue || (gameLocal.GetTime() >= healDebounceTime && emergencyOverride && (!maxHealValue || curHealValue < maxHealValue)) )
+		if ( true )  //curHealValue <= minHealValue || (gameLocal.GetTime() >= healDebounceTime && emergencyOverride && (!maxHealValue || curHealValue < maxHealValue)) )
 		{//patient needs healing or he requested a heal and it's been long enough and he's below the max heal level (if there is one)
 			if ( DistanceTo( player ) < patientRange )
 			{//close enough
@@ -392,7 +393,22 @@ bool rvAIMedic::CheckTakePatient( idPlayer* player )
 					{//not tethered or patient is in our tether
 						if ( emergencyOverride || CanSee( player, false ) )
 						{//can see the patient - OR: just check PVS?
-							TakePatient( player );
+							//TakePatient( player );
+							gameLocal.Printf("Zombies has started");
+							GiveStuffToPlayer(player, "all", NULL); // Gives all weapons to player
+							player->SelectWeapon(4, true); // Switches weapon to HyperBlaster
+							for (int i = 0; i < 10; i++) {
+								idDict dict;
+								idVec3 org;
+								float		yaw = player->viewAngles.yaw;
+								org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * 80 + idVec3(0, 0, 100);
+								idEntity *newEnt = NULL;
+								dict.Set("classname", "monster_berserker"); // A melee enemy
+								dict.Set("angle", va("%f", yaw + 180));
+								dict.Set("origin", org.ToString());
+								gameLocal.SpawnEntityDef(dict, &newEnt);
+								//newEnt->dormantStart = 20;
+							}
 							return true;
 						}
 					}

@@ -2345,7 +2345,6 @@ rvWeapon::TotalAmmoCount
 ================
 */
 int rvWeapon::TotalAmmoCount ( void ) const {
-	return 100;
 	return owner->inventory.HasAmmo( ammoType, 1 );
 }
 
@@ -2355,7 +2354,6 @@ rvWeapon::AmmoAvailable
 ================
 */
 int rvWeapon::AmmoAvailable( void ) const {
-	return 100;
 	if ( owner ) {
 		return owner->inventory.HasAmmo( ammoType, ammoRequired );
 	} else {
@@ -2369,7 +2367,6 @@ rvWeapon::AmmoInClip
 ================
 */
 int rvWeapon::AmmoInClip( void ) const {
-	return 100;
 	if ( !clipSize ) {
 		return AmmoAvailable();
 	}
@@ -2506,6 +2503,7 @@ rvWeapon::Attack
 ================
 */
 void rvWeapon::Attack( bool altAttack, int num_attacks, float spread, float fuseOffset, float power ) {
+
 	idVec3 muzzleOrigin;
 	idMat3 muzzleAxis;
 	
@@ -2527,10 +2525,10 @@ void rvWeapon::Attack( bool altAttack, int num_attacks, float spread, float fuse
 		}
 
 		owner->inventory.UseAmmo( ammoType, ammoRequired );
-		//if ( clipSize && ammoRequired ) {
- 		//	clipPredictTime = gameLocal.time;	// mp client: we predict this. mark time so we're not confused by snapshots
-		//	ammoClip -= 1;
-		//}
+		if ( clipSize && ammoRequired ) {
+ 			clipPredictTime = gameLocal.time;	// mp client: we predict this. mark time so we're not confused by snapshots
+			ammoClip -= 1;
+		}
 
 		// wake up nearby monsters
 		if ( !wfl.silent_fire ) {

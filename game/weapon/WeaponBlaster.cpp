@@ -423,8 +423,6 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 				SetState ( "Idle", 4 );
 				return SRESULT_DONE;
 			}
-
-
 	
 			if ( gameLocal.time - fireHeldTime > chargeTime ) {	
 				Attack ( true, 1, spread, 0, 1.0f );
