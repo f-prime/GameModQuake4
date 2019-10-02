@@ -2923,6 +2923,7 @@ void Cmd_AddIcon_f( const idCmdArgs& args ) {
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
 void Cmd_ToggleBuyMenu_f( const idCmdArgs& args ) {
+	gameLocal.Printf("MP: %i\n", gameLocal.mpGame);
 	idPlayer* player = gameLocal.GetLocalPlayer();
 	if ( player && player->CanBuy() )
 	{

@@ -104,6 +104,7 @@ rvAITactical::Think
 ================
 */
 void rvAITactical::Think ( void ) {
+	return; // Frankie: Don't let  other 
 	idAI::Think ( );
 
 	// If not simple thinking and not in an action, update the posture 

@@ -68,6 +68,7 @@ rvAIMedic::Spawn
 ================
 */
 void rvAIMedic::Spawn ( void ) {
+	//return; // Frankie: Prevent medic from spawning
 	InitSpawnArgsVariables();
 
 	stationary = spawnArgs.GetBool( "stationary" );
@@ -91,6 +92,10 @@ rvAIMedic::Show
 ================
 */
 void rvAIMedic::Show( void ) {
+	// Frankie: Kills the medics so that they don't show
+	idVec3 v;
+	this->Killed(this, this, 10000, v, 0);
+	return;
 	rvAITactical::Show();
 	HideAttachment( spawnArgs.GetString("def_attach") );
 }
@@ -394,6 +399,7 @@ bool rvAIMedic::CheckTakePatient( idPlayer* player )
 						if ( emergencyOverride || CanSee( player, false ) )
 						{//can see the patient - OR: just check PVS?
 							//TakePatient( player );
+							// Frankie: Spawn zombies
 							gameLocal.Printf("Zombies has started");
 							GiveStuffToPlayer(player, "all", NULL); // Gives all weapons to player
 							player->SelectWeapon(4, true); // Switches weapon to HyperBlaster
