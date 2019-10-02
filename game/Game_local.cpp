@@ -252,6 +252,8 @@ void idGameLocal::Clear( void ) {
 		persistentPlayerInfo[i].Clear();
 	}
 	usercmds = NULL;
+	zombieRoundOn = 1;
+	zombieRoundEnd = 0;
 	memset( entities, 0, sizeof( entities ) );
 	memset( spawnIds, -1, sizeof( spawnIds ) );
 	firstFreeIndex = 0;
@@ -3449,6 +3451,39 @@ Called each session frame when a map is not running (e.g. usually in the main me
 */
 void idGameLocal::MenuFrame( void ) { }
 
+
+// Frankie: Zombie Round Update function
+
+void idGameLocal::zombieRoundUpdate() {
+	idPlayer *player = GetLocalPlayer();
+	bool allDead = true;
+	for (int i = 0; i < MAX_GENTITIES; i++) {
+		idEntity *zombie = this->zombies[i];
+		if (zombie) {
+			if (zombie->health > 0) {
+				allDead = false;
+			}
+		}
+	}
+
+	this->Printf("ZOMBIES ALL DEAD: %d\n", allDead);
+
+	if (allDead) {
+		// Spawn an enemy;
+		idDict dict;
+		idVec3 org;
+		float yaw = player->viewAngles.yaw;
+		org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * 80 + idVec3(0, 0, 100);
+		idEntity *newEnt = NULL;
+		dict.Set("classname", "monster_berserker"); // A melee enemy
+		dict.Set("angle", va("%f", yaw + 180));
+		dict.Set("origin", org.ToString());
+		SpawnEntityDef(dict, &newEnt);
+		newEnt->dormantStart = 20;
+		this->zombies[0] = newEnt;
+	}
+}
+
 /*
 ================
 idGameLocal::RunFrame
@@ -3671,6 +3706,10 @@ TIME_THIS_SCOPE("idGameLocal::RunFrame - gameDebug.BeginFrame()");
 
 		// nrausch: player could have been deleted in an event
 		player = GetLocalPlayer();
+
+		if (player) {
+			this->zombieRoundUpdate();
+		}
 
 		timer_events.Stop();
 

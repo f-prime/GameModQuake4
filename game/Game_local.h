@@ -321,6 +321,11 @@ class rvGravityArea;
 
 class idGameLocal : public idGame {
 public:
+	int						zombieRoundOn;				// Frankie: Zombie round currently on
+	int					    zombieRoundEnd;				// Frankie: Zombie time round ended
+	idEntity *				zombies[MAX_GENTITIES];     // Frankie: List of zombies 
+	virtual void			zombieRoundUpdate();		// Frankie: Zombie round update function
+
 	idDict					serverInfo;				// all the tunable parameters, like numclients, etc
 	int						numClients;				// pulled from serverInfo and verified
 	idDict					userInfo[MAX_CLIENTS];	// client specific settings
