@@ -321,10 +321,13 @@ class rvGravityArea;
 
 class idGameLocal : public idGame {
 public:
+	int						playerLasthealthRegen;		// Frankie: Timer for when to regen health
 	int						zombieRoundOn;				// Frankie: Zombie round currently on
 	int					    zombieRoundEnd;				// Frankie: Zombie time round ended
 	idEntity *				zombies[MAX_GENTITIES];     // Frankie: List of zombies 
 	virtual void			zombieRoundUpdate();		// Frankie: Zombie round update function
+	virtual void			zombieSpawn();				// Frankie: Spawn Zombie
+	
 
 	idDict					serverInfo;				// all the tunable parameters, like numclients, etc
 	int						numClients;				// pulled from serverInfo and verified

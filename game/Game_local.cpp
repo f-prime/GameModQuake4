@@ -252,7 +252,7 @@ void idGameLocal::Clear( void ) {
 		persistentPlayerInfo[i].Clear();
 	}
 	usercmds = NULL;
-	zombieRoundOn = 1;
+	zombieRoundOn = 0;
 	zombieRoundEnd = 0;
 	memset( entities, 0, sizeof( entities ) );
 	memset( spawnIds, -1, sizeof( spawnIds ) );
@@ -3454,6 +3454,27 @@ void idGameLocal::MenuFrame( void ) { }
 
 // Frankie: Zombie Round Update function
 
+void idGameLocal::zombieSpawn() {
+	idPlayer *player = GetLocalPlayer();
+
+	for (int i = 0; i < this->zombieRoundOn; i++) {
+		idDict dict;
+		
+		int offsetX = random.RandomInt(50) + 50;
+		int offsetY = random.RandomInt(50) + 50;
+
+		idVec3 org = idVec3(9223 + offsetX, -6893 + offsetY, 79.13); // TO prevent them from getting stuck inside eachother
+		float yaw = player->viewAngles.yaw;
+		idEntity *newEnt = NULL;
+		dict.Set("classname", "monster_berserker"); // A melee enemy
+		dict.Set("angle", va("%f", yaw + 180));
+		dict.Set("origin", org.ToString());
+		SpawnEntityDef(dict, &newEnt);
+		newEnt->health = 10 * this->zombieRoundOn;
+		this->zombies[i] = newEnt;
+	}
+}
+
 void idGameLocal::zombieRoundUpdate() {
 	idPlayer *player = GetLocalPlayer();
 	bool allDead = true;
@@ -3466,22 +3487,20 @@ void idGameLocal::zombieRoundUpdate() {
 		}
 	}
 
-	this->Printf("ZOMBIES ALL DEAD: %d\n", allDead);
-
 	if (allDead) {
-		// Spawn an enemy;
-		idDict dict;
-		idVec3 org;
-		float yaw = player->viewAngles.yaw;
-		org = player->GetPhysics()->GetOrigin() + idAngles(0, yaw, 0).ToForward() * 80 + idVec3(0, 0, 100);
-		idEntity *newEnt = NULL;
-		dict.Set("classname", "monster_berserker"); // A melee enemy
-		dict.Set("angle", va("%f", yaw + 180));
-		dict.Set("origin", org.ToString());
-		SpawnEntityDef(dict, &newEnt);
-		newEnt->dormantStart = 20;
-		this->zombies[0] = newEnt;
+		//if (zombieRoundEnd <= 0) {
+			this->zombieRoundOn++;
+			zombieSpawn();
+		//}
+		//else {
+		//	this->zombieRoundEnd--;
+		//}
 	}
+	/*else {
+		this->zombieRoundEnd = 1000;
+	}*/
+
+	Printf("LOG: %b %d\n", allDead, zombieRoundEnd);
 }
 
 /*
