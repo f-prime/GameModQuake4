@@ -322,6 +322,7 @@ class rvGravityArea;
 class idGameLocal : public idGame {
 public:
 	int						playerLasthealthRegen;		// Frankie: Timer for when to regen health
+	int						playerPoints;				// Frankie: Points accumuated
 	int						zombieRoundOn;				// Frankie: Zombie round currently on
 	int					    zombieRoundEnd;				// Frankie: Zombie time round ended
 	idEntity *				zombies[MAX_GENTITIES];     // Frankie: List of zombies 

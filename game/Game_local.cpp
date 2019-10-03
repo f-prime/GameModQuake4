@@ -252,6 +252,8 @@ void idGameLocal::Clear( void ) {
 		persistentPlayerInfo[i].Clear();
 	}
 	usercmds = NULL;
+	playerPoints = 0;
+	playerLasthealthRegen = 0;
 	zombieRoundOn = 0;
 	zombieRoundEnd = 0;
 	memset( entities, 0, sizeof( entities ) );
@@ -3500,7 +3502,10 @@ void idGameLocal::zombieRoundUpdate() {
 		this->zombieRoundEnd = 1000;
 	}*/
 
-	Printf("LOG: %b %d\n", allDead, zombieRoundEnd);
+	Printf("POINTS: %d\n", playerPoints);
+
+	//player->hud->SetStateString("message", common->GetLocalizedString("#str_102916"));
+	//player->hud->HandleNamedEvent("Message");
 }
 
 /*
