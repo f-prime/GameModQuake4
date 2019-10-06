@@ -8438,7 +8438,6 @@ idPlayer::PerformImpulse
 ==============
 */
 void idPlayer::PerformImpulse( int impulse ) {
-
 //RAVEN BEGIN
 // nrausch: Don't send xenon dpad impulses over the network
 #ifdef _XENON
@@ -8594,11 +8593,10 @@ void idPlayer::PerformImpulse( int impulse ) {
 		case IMPULSE_114:	break; // Unused
 		case IMPULSE_115:	break; // Unused
 		case IMPULSE_116:	break; // Unused
-		case IMPULSE_117:	break; // Unused
+		case IMPULSE_117:	break; // Unused 
 		case IMPULSE_118:	AttemptToBuyItem( "item_armor_small" );				break;
 		case IMPULSE_119:	AttemptToBuyItem( "item_armor_large" );				break;
 		case IMPULSE_120:	AttemptToBuyItem( "ammorefill" );					break;
-		case IMPULSE_121:	break; // Unused
 		case IMPULSE_122:	break; // Unused
 		case IMPULSE_123:	AttemptToBuyItem( "ammo_regen" );					break;
 		case IMPULSE_124:	AttemptToBuyItem( "health_regen" );					break;
@@ -12782,6 +12780,7 @@ void idPlayer::ShowTip( const char *title, const char *tip, bool autoHide ) {
 	if ( tipUp ) {
 		return;
 	}
+
 	hud->SetStateString( "tip", tip );
 	hud->SetStateString( "tiptitle", title );
 	hud->HandleNamedEvent( "tipWindowUp" ); 

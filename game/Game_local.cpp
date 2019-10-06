@@ -253,6 +253,8 @@ void idGameLocal::Clear( void ) {
 	}
 	usercmds = NULL;
 	
+	// Frankie: Start
+
 	blasterUpgraded = false;
 	machineGunUpgraded = false;
 	shotgunUpgraded = false;
@@ -271,6 +273,8 @@ void idGameLocal::Clear( void ) {
 	playerLasthealthRegen = 0;
 	zombieRoundOn = 0;
 	zombieRoundEnd = 0;
+	
+	// Frankie: End
 
 	memset( entities, 0, sizeof( entities ) );
 	memset( spawnIds, -1, sizeof( spawnIds ) );
@@ -3488,7 +3492,7 @@ void idGameLocal::zombieSpawn() {
 		dict.Set("angle", va("%f", yaw + 180));
 		dict.Set("origin", org.ToString());
 		SpawnEntityDef(dict, &newEnt);
-		newEnt->health = 10 * this->zombieRoundOn;
+		newEnt->health = 5 * this->zombieRoundOn;
 		this->zombies[i] = newEnt;
 	}
 }
@@ -3512,9 +3516,16 @@ void idGameLocal::zombieRoundUpdate() {
 	hud->SetStateString("itemtext", information);
 	hud->SetStateString("itemicon", "");
 	hud->HandleNamedEvent("itemPickup");
-
 	if (allDead) {
+
 		if (this->zombieRoundOn == 0){
+			// Builds buy menu in the objective prompt
+			idObjectiveInfo info; 
+			info.title = common->GetLocalizedString("BUY MENU (Regular, Upgraded)");
+			info.text = common->GetLocalizedString("Machine Gun: Y H\nHyper Blaster: U J\n");
+			info.screenshot = "";
+			player->inventory.objectiveNames.Append(info);
+
 			player->health = 100; // Set player health to 100 to start.
 		}
 		//if (zombieRoundEnd <= 0) {

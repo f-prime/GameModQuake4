@@ -9080,8 +9080,9 @@ idMultiplayerGame::RedrawLocalBuyMenu
 */
 void idMultiplayerGame::RedrawLocalBuyMenu( void )
 {
-	if ( !buyMenu )
+	if (!buyMenu) {
 		return;
+	}
 
 	SetupBuyMenuItems();
 	buyMenu->HandleNamedEvent( "update_buymenu" );
