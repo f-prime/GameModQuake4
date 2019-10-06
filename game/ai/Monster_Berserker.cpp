@@ -190,6 +190,10 @@ rvMonsterBerserker::CheckActions
 */
 bool rvMonsterBerserker::CheckActions ( void ) {
 	// Pop-up attack is a forward moving melee attack that throws the enemy up in the air
+	
+	// Frankie: Prevent from using attacks other than Melee
+	
+	/*
 	if ( PerformAction ( &actionPopupAttack, (checkAction_t)&idAI::CheckAction_LeapAttack, &actionTimerSpecialAttack ) ) {
 		return true;
 	}
@@ -198,17 +202,25 @@ bool rvMonsterBerserker::CheckActions ( void ) {
 	if ( PerformAction ( &actionChargeAttack, (checkAction_t)&rvMonsterBerserker::CheckAction_ChargeAttack, &actionTimerSpecialAttack ) ) {
 		return true;
 	}
+	*/
+
+	// Frankie: End
 
 	if ( CheckPainActions ( ) ) {
 		return true;
 	}
 
-	if ( PerformAction ( &actionEvadeLeft,   (checkAction_t)&idAI::CheckAction_EvadeLeft, &actionTimerEvade )			 ||
-			PerformAction ( &actionEvadeRight,  (checkAction_t)&idAI::CheckAction_EvadeRight, &actionTimerEvade )			 ||
-			PerformAction ( &actionJumpBack,	 (checkAction_t)&idAI::CheckAction_JumpBack, &actionTimerEvade )			 ||
-			PerformAction ( &actionLeapAttack,  (checkAction_t)&idAI::CheckAction_LeapAttack )	) {
+	// Frankie: Prevent from using attcks other than Melee
+
+	/*if (PerformAction(&actionEvadeLeft, (checkAction_t)&idAI::CheckAction_EvadeLeft, &actionTimerEvade) ||
+		PerformAction(&actionEvadeRight, (checkAction_t)&idAI::CheckAction_EvadeRight, &actionTimerEvade) ||
+		PerformAction(&actionJumpBack, (checkAction_t)&idAI::CheckAction_JumpBack, &actionTimerEvade) ||
+		PerformAction(&actionLeapAttack, (checkAction_t)&idAI::CheckAction_LeapAttack)) {
 		return true;
-	} else if ( PerformAction ( &actionMeleeAttack, (checkAction_t)&idAI::CheckAction_MeleeAttack ) ) {
+	}*/
+	// Frankie: end
+
+	if ( PerformAction ( &actionMeleeAttack, (checkAction_t)&idAI::CheckAction_MeleeAttack ) ) {
 		standingMeleeNoAttackTime = 0;
 		return true;
 	} else {
@@ -229,9 +241,14 @@ bool rvMonsterBerserker::CheckActions ( void ) {
 				}
 			}
 		}
-		if ( PerformAction ( &actionRangedAttack,(checkAction_t)&rvMonsterBerserker::CheckAction_RangedAttack, &actionTimerRangedAttack ) ) {
+
+		// Frankie: Prevent from using attcks other than Melee
+
+		/*if ( PerformAction ( &actionRangedAttack,(checkAction_t)&rvMonsterBerserker::CheckAction_RangedAttack, &actionTimerRangedAttack ) ) {
 			return true;
-		}
+		}*/
+
+		// Frankie: End
 	}
 	return false;
 }
@@ -408,7 +425,6 @@ stateResult_t rvMonsterBerserker::State_Killed	( const stateParms_t& parms ) {
 	StopEffect ( "fx_charge_up" );
 	StopEffect ( "fx_ambient_electricity" );
 	StopEffect ( "fx_ambient_electricity_mace" );
-	gameLocal.playerPoints += 25; // Frankie: Increase player's points on kill
 	return idAI::State_Killed ( parms );
 }
 
@@ -418,8 +434,6 @@ rvMonsterBerserker::Frame_ChargeGroundImpact
 ================
 */
 stateResult_t rvMonsterBerserker::Frame_ChargeGroundImpact ( const stateParms_t& parms ) {
-	return SRESULT_OK; // Frankie: Dont give groiund attack
-
 	idVec3			start;
 	idVec3			end;
 	idMat3			axis;
@@ -445,8 +459,6 @@ rvMonsterBerserker::Frame_DoBlastAttack
 ================
 */
 stateResult_t rvMonsterBerserker::Frame_DoBlastAttack ( const stateParms_t& parms ) {
-	return SRESULT_OK; // Frankie: Don't give blast attack
-
 	float			i;
 	idVec3			start;
 	idMat3			axis;

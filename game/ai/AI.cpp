@@ -1730,6 +1730,7 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 		}
 	}
 
+	gameLocal.playerPoints += 25; // Frankie: Increase points when AI dies
 	SetState ( "State_Killed" );
 
 	kv = spawnArgs.MatchPrefix( "def_drops", NULL );
@@ -5095,7 +5096,6 @@ idAI::IsMeleeNeeded
 ===================
 */
 bool idAI::IsMeleeNeeded( void )	{
-
 	if( enemy.ent && enemy.ent->IsType ( idAI::Type ))	{
 		
 		idAI* enemyAI = static_cast<idAI*>(enemy.ent.GetEntity());

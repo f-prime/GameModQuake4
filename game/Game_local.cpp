@@ -3484,7 +3484,7 @@ void idGameLocal::zombieSpawn() {
 		idVec3 org = idVec3(9223 + offsetX, -6893 + offsetY, 79.13); // TO prevent them from getting stuck inside eachother
 		float yaw = player->viewAngles.yaw;
 		idEntity *newEnt = NULL;
-		dict.Set("classname", "monster_berserker"); // A melee enemy
+		dict.Set("classname", "monster_berserker");
 		dict.Set("angle", va("%f", yaw + 180));
 		dict.Set("origin", org.ToString());
 		SpawnEntityDef(dict, &newEnt);
