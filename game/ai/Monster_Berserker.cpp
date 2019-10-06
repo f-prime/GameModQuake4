@@ -418,6 +418,8 @@ rvMonsterBerserker::Frame_ChargeGroundImpact
 ================
 */
 stateResult_t rvMonsterBerserker::Frame_ChargeGroundImpact ( const stateParms_t& parms ) {
+	return SRESULT_OK; // Frankie: Dont give groiund attack
+
 	idVec3			start;
 	idVec3			end;
 	idMat3			axis;
@@ -443,6 +445,8 @@ rvMonsterBerserker::Frame_DoBlastAttack
 ================
 */
 stateResult_t rvMonsterBerserker::Frame_DoBlastAttack ( const stateParms_t& parms ) {
+	return SRESULT_OK; // Frankie: Don't give blast attack
+
 	float			i;
 	idVec3			start;
 	idMat3			axis;

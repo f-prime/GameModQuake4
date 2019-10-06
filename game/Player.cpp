@@ -5200,16 +5200,21 @@ idPlayer::GiveObjective
 ===============
 */
 void idPlayer::GiveObjective( const char *title, const char *text, const char *screenshot ) {
+	// Frankie: Prevent objectives from showing up
+	return;
+
 	idObjectiveInfo info;
 // RAVEN BEGIN
 	info.title = common->GetLocalizedString( title );
 	info.text = common->GetLocalizedString( text );
 // RAVEN END
 	info.screenshot = screenshot;
-	inventory.objectiveNames.Append( info );
+	inventory.objectiveNames.Append(info);
+	
 	if ( showNewObjectives ) {
 		ShowObjective( "newObjective" );
 	}
+
 	if ( objectiveSystem ) {
 		if ( objectiveSystemOpen ) {
 			objectiveSystemOpen = false;

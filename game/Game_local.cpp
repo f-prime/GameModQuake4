@@ -252,10 +252,26 @@ void idGameLocal::Clear( void ) {
 		persistentPlayerInfo[i].Clear();
 	}
 	usercmds = NULL;
+	
+	blasterUpgraded = false;
+	machineGunUpgraded = false;
+	shotgunUpgraded = false;
+	hyperBlasterUpgraded = false;
+	grenadeLauncherUpgraded = false;
+	nailGunUpgraded = false;
+	rocketLauncherUpgraded = false;
+	nailGunUpgraded = false;
+	rocketLauncherUpgraded = false;
+	railgunUpgraded = false;
+	lighteningGunUpgraded = false;
+	darkMatterGunUpgraded = false;
+	napalmGunUpgraded = false;
+
 	playerPoints = 0;
 	playerLasthealthRegen = 0;
 	zombieRoundOn = 0;
 	zombieRoundEnd = 0;
+
 	memset( entities, 0, sizeof( entities ) );
 	memset( spawnIds, -1, sizeof( spawnIds ) );
 	firstFreeIndex = 0;
@@ -3479,6 +3495,7 @@ void idGameLocal::zombieSpawn() {
 
 void idGameLocal::zombieRoundUpdate() {
 	idPlayer *player = GetLocalPlayer();
+	idUserInterface* hud = player->GetHud();
 	bool allDead = true;
 	for (int i = 0; i < MAX_GENTITIES; i++) {
 		idEntity *zombie = this->zombies[i];
@@ -3489,7 +3506,17 @@ void idGameLocal::zombieRoundUpdate() {
 		}
 	}
 
+	// Frankie: Set new item pickup menu to show round number and points
+	idStr information;
+	sprintf(information, "Points: %d    Round: %d", this->playerPoints, this->zombieRoundOn);
+	hud->SetStateString("itemtext", information);
+	hud->SetStateString("itemicon", "");
+	hud->HandleNamedEvent("itemPickup");
+
 	if (allDead) {
+		if (this->zombieRoundOn == 0){
+			player->health = 100; // Set player health to 100 to start.
+		}
 		//if (zombieRoundEnd <= 0) {
 			this->zombieRoundOn++;
 			zombieSpawn();
@@ -3501,12 +3528,9 @@ void idGameLocal::zombieRoundUpdate() {
 	/*else {
 		this->zombieRoundEnd = 1000;
 	}*/
-
-	Printf("POINTS: %d\n", playerPoints);
-
-	//player->hud->SetStateString("message", common->GetLocalizedString("#str_102916"));
-	//player->hud->HandleNamedEvent("Message");
 }
+
+// Frankie: End
 
 /*
 ================
