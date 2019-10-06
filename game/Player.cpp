@@ -8438,6 +8438,7 @@ idPlayer::PerformImpulse
 ==============
 */
 void idPlayer::PerformImpulse( int impulse ) {
+	gameLocal.Printf("IMPULSE CHAR: %i\n", impulse);
 //RAVEN BEGIN
 // nrausch: Don't send xenon dpad impulses over the network
 #ifdef _XENON
@@ -8482,6 +8483,39 @@ void idPlayer::PerformImpulse( int impulse ) {
 //RAVEN END
 
 	switch( impulse ) {
+		// Frankie: Buy Input
+		case 76:
+			gameLocal.zombieBuyWeapon(ZWEAPON_MG);
+			break;
+		case 77:
+			gameLocal.zombieBuyWeapon(ZWEAPON_MG_UPGRADED);
+			break;
+		case 78:
+			gameLocal.zombieBuyWeapon(ZWEAPON_HYPER_BLASTER);
+			break;
+		case 79:
+			gameLocal.zombieBuyWeapon(ZWEAPON_HYPER_BLASTER_UPGRADED);
+			break;
+		case 80:
+			gameLocal.zombieBuyWeapon(ZWEAPON_ROCKET_LAUNCHER);
+			break;
+		case 81:
+			gameLocal.zombieBuyWeapon(ZWEAPON_ROCKET_LAUNCHER_UPGRADED);
+			break;
+		case 82:
+			gameLocal.zombieBuyWeapon(ZWEAPON_GRENADE_LAUNCHER);
+			break;
+		case 83:
+			gameLocal.zombieBuyWeapon(ZWEAPON_GRENADE_LAUNCHER_UPGRADED);
+			break;
+		case 84:
+			gameLocal.zombieBuyWeapon(ZWEAPON_SHOTGUN);
+			break;
+		case 85:
+			gameLocal.zombieBuyWeapon(ZWEAPON_SHOTGUN_UPGRADED);
+			break;
+
+		// Frankie: End
 		case IMPULSE_13: {
 			Reload();
 			break;

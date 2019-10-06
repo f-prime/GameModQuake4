@@ -3497,6 +3497,16 @@ void idGameLocal::zombieSpawn() {
 	}
 }
 
+void idGameLocal::zombieBuyWeapon(ZWeapon weapon) {
+	idPlayer *player = GetLocalPlayer();
+	switch (weapon) {
+		case ZWEAPON_MG: {
+			GiveStuffToPlayer(player, "weapon_machinegun", "1");
+			break;
+		}
+	}
+}
+
 void idGameLocal::zombieRoundUpdate() {
 	idPlayer *player = GetLocalPlayer();
 	idUserInterface* hud = player->GetHud();
@@ -3516,13 +3526,19 @@ void idGameLocal::zombieRoundUpdate() {
 	hud->SetStateString("itemtext", information);
 	hud->SetStateString("itemicon", "");
 	hud->HandleNamedEvent("itemPickup");
+
 	if (allDead) {
 
 		if (this->zombieRoundOn == 0){
 			// Builds buy menu in the objective prompt
 			idObjectiveInfo info; 
 			info.title = common->GetLocalizedString("BUY MENU (Regular, Upgraded)");
-			info.text = common->GetLocalizedString("Machine Gun: Y H\nHyper Blaster: U J\n");
+			info.text = common->GetLocalizedString("Machine Gun: y (1k) h (10k)\n\
+Shotgun: p (5k) \; (50k)\n\
+Hyper Blaster: u (10k) j (70k)\n\
+Rocket Launcher: i (15k) k (60k)\n\
+Grenade Launcher: o (13k) l (55k)\n");
+
 			info.screenshot = "";
 			player->inventory.objectiveNames.Append(info);
 

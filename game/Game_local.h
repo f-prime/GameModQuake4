@@ -319,6 +319,22 @@ class rvGravityArea;
 
 //============================================================================
 
+
+// Frankie: Start
+enum ZWeapon {
+	ZWEAPON_MG,
+	ZWEAPON_MG_UPGRADED,
+	ZWEAPON_HYPER_BLASTER,
+	ZWEAPON_HYPER_BLASTER_UPGRADED,
+	ZWEAPON_ROCKET_LAUNCHER,
+	ZWEAPON_ROCKET_LAUNCHER_UPGRADED,
+	ZWEAPON_GRENADE_LAUNCHER,
+	ZWEAPON_GRENADE_LAUNCHER_UPGRADED,
+	ZWEAPON_SHOTGUN,
+	ZWEAPON_SHOTGUN_UPGRADED
+};
+// Frankie: End
+
 class idGameLocal : public idGame {
 public:
 	// Frankie: Start
@@ -342,6 +358,9 @@ public:
 	virtual void			zombieRoundUpdate();		// Frankie: Zombie round update function
 	virtual void			zombieSpawn();				// Frankie: Spawn Zombie
 	
+
+	
+	virtual void			zombieBuyWeapon(ZWeapon weapon);
 	// Frankie: End
 
 	idDict					serverInfo;				// all the tunable parameters, like numclients, etc
