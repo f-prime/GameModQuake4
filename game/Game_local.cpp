@@ -3500,10 +3500,83 @@ void idGameLocal::zombieSpawn() {
 void idGameLocal::zombieBuyWeapon(ZWeapon weapon) {
 	idPlayer *player = GetLocalPlayer();
 	switch (weapon) {
-		case ZWEAPON_MG: {
-			GiveStuffToPlayer(player, "weapon_machinegun", "1");
+		case ZWEAPON_MG: 
+			if (playerPoints >= 300) {
+				playerPoints -= 300;
+				for (int i = 0; i < 10; i++) // Give full ammo
+					GiveStuffToPlayer(player, "weapon_machinegun", "1");
+			}
 			break;
-		}
+		case ZWEAPON_MG_UPGRADED:
+			if (playerPoints >= 1000 && !machineGunUpgraded) {
+				playerPoints -= 1000;
+				for (int i = 0; i < 10; i++)
+					GiveStuffToPlayer(player, "weapon_machinegun", "1");
+				machineGunUpgraded = true;
+			}
+			break;
+		case ZWEAPON_SHOTGUN:
+			if (playerPoints >= 500) {
+				playerPoints -= 500;
+				for (int i = 0; i < 10; i++)
+					GiveStuffToPlayer(player, "weapon_shotgun", "1");
+			}
+			break;
+		case ZWEAPON_SHOTGUN_UPGRADED:
+			if (playerPoints >= 1200 && !shotgunUpgraded) {
+				playerPoints -= 1200;
+				for (int i = 0; i < 10; i++)
+					GiveStuffToPlayer(player, "weapon_shotgun", "1");
+				shotgunUpgraded = true;
+			}
+			break;
+
+		case ZWEAPON_HYPER_BLASTER:
+			if (playerPoints >= 1000) {
+				playerPoints -= 1000;
+				for (int i = 0; i < 10; i++)
+					GiveStuffToPlayer(player, "weapon_hyperblaster", "1");
+			}
+			break;
+		case ZWEAPON_HYPER_BLASTER_UPGRADED:
+			if (playerPoints >= 2000 && !hyperBlasterUpgraded) {
+				playerPoints -= 2000;
+				for (int i = 0; i < 10; i++)
+					GiveStuffToPlayer(player, "weapon_hyperblaster", "1");
+				hyperBlasterUpgraded = true;
+			}
+			break;
+		case ZWEAPON_ROCKET_LAUNCHER:
+			if (playerPoints >= 1300) {
+				playerPoints -= 1300;
+				for (int i = 0; i < 10; i++)
+					GiveStuffToPlayer(player, "weapon_rocketlauncher", "1");
+			}
+			break;
+		case ZWEAPON_ROCKET_LAUNCHER_UPGRADED:
+			if (playerPoints >= 2500 && !rocketLauncherUpgraded) {
+				playerPoints -= 2500;
+				for (int i = 0; i < 10; i++)
+					GiveStuffToPlayer(player, "weapon_rocketlauncher", "1");
+				rocketLauncherUpgraded = true;
+				
+			}
+			break;
+		case ZWEAPON_GRENADE_LAUNCHER:
+			if (playerPoints >= 1100) {
+				playerPoints -= 1100;
+				for (int i = 0; i < 10; i++)
+					GiveStuffToPlayer(player, "weapon_grenadelauncher", "1");
+			}
+			break;
+		case ZWEAPON_GRENADE_LAUNCHER_UPGRADED:
+			if (playerPoints >= 1500 && !grenadeLauncherUpgraded) {
+				playerPoints -= 1500;
+				for (int i = 0; i < 10; i++)
+					GiveStuffToPlayer(player, "weapon_grenadelauncher", "1");
+				grenadeLauncherUpgraded = true;
+			}
+			break;
 	}
 }
 
@@ -3533,11 +3606,11 @@ void idGameLocal::zombieRoundUpdate() {
 			// Builds buy menu in the objective prompt
 			idObjectiveInfo info; 
 			info.title = common->GetLocalizedString("BUY MENU (Regular, Upgraded)");
-			info.text = common->GetLocalizedString("Machine Gun: y (1k) h (10k)\n\
-Shotgun: p (5k) \; (50k)\n\
-Hyper Blaster: u (10k) j (70k)\n\
-Rocket Launcher: i (15k) k (60k)\n\
-Grenade Launcher: o (13k) l (55k)\n");
+			info.text = common->GetLocalizedString("Machine Gun: y (300) h (1k)\n\
+Shotgun: p (500) \; (1.2k)\n\
+Hyper Blaster: u (1k) j (2k)\n\
+Rocket Launcher: i (1.3k) k (2.5k)\n\
+Grenade Launcher: o (1.1k) l (1.5k)\n");
 
 			info.screenshot = "";
 			player->inventory.objectiveNames.Append(info);

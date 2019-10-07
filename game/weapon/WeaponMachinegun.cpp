@@ -226,10 +226,11 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			if ( wsfl.zoom ) {
-				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-				Attack ( true, 1, spreadZoom, 0, 1.0f );
-				fireHeld = true;
+			// Frankie: Modify machine gun
+			if ( gameLocal.machineGunUpgraded ) {
+				nextAttackTime = gameLocal.time + 2; //(altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
+				Attack ( true, 10, 7, 0, 1.5f );
+				//fireHeld = true;
 			} else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 				Attack ( false, 1, spread, 0, 1.0f );
