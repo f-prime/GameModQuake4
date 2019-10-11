@@ -331,7 +331,9 @@ enum ZWeapon {
 	ZWEAPON_GRENADE_LAUNCHER,
 	ZWEAPON_GRENADE_LAUNCHER_UPGRADED,
 	ZWEAPON_SHOTGUN,
-	ZWEAPON_SHOTGUN_UPGRADED
+	ZWEAPON_SHOTGUN_UPGRADED,
+	ZWEAPON_NAILGUN_UPGRADED,
+	ZWEAPON_NAILGUN
 };
 // Frankie: End
 
@@ -357,7 +359,7 @@ public:
 	idEntity *				zombies[MAX_GENTITIES];     // Frankie: List of zombies 
 	virtual void			zombieRoundUpdate();		// Frankie: Zombie round update function
 	virtual void			zombieSpawn();				// Frankie: Spawn Zombie
-	
+	virtual void			zombieRestart();
 
 	
 	virtual void			zombieBuyWeapon(ZWeapon weapon);

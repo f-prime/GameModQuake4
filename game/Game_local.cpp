@@ -255,25 +255,8 @@ void idGameLocal::Clear( void ) {
 	
 	// Frankie: Start
 
-	blasterUpgraded = false;
-	machineGunUpgraded = false;
-	shotgunUpgraded = false;
-	hyperBlasterUpgraded = false;
-	grenadeLauncherUpgraded = false;
-	nailGunUpgraded = false;
-	rocketLauncherUpgraded = false;
-	nailGunUpgraded = false;
-	rocketLauncherUpgraded = false;
-	railgunUpgraded = false;
-	lighteningGunUpgraded = false;
-	darkMatterGunUpgraded = false;
-	napalmGunUpgraded = false;
+	zombieRestart();
 
-	playerPoints = 0;
-	playerLasthealthRegen = 0;
-	zombieRoundOn = 0;
-	zombieRoundEnd = 0;
-	
 	// Frankie: End
 
 	memset( entities, 0, sizeof( entities ) );
@@ -3476,6 +3459,29 @@ void idGameLocal::MenuFrame( void ) { }
 
 // Frankie: Zombie Round Update function
 
+void idGameLocal::zombieRestart() {
+	blasterUpgraded = false;
+	machineGunUpgraded = false;
+	shotgunUpgraded = false;
+	hyperBlasterUpgraded = false;
+	grenadeLauncherUpgraded = false;
+	nailGunUpgraded = false;
+	rocketLauncherUpgraded = false;
+	railgunUpgraded = false;
+	lighteningGunUpgraded = false;
+	darkMatterGunUpgraded = false;
+	napalmGunUpgraded = false;
+
+	playerPoints = 0;
+	playerLasthealthRegen = 0;
+	zombieRoundOn = 0;
+	zombieRoundEnd = 0;
+
+	for (int i = 0; i < MAX_GENTITIES; i++) {
+		//zombies[i] = NULL;
+	}
+}
+
 void idGameLocal::zombieSpawn() {
 	idPlayer *player = GetLocalPlayer();
 
@@ -3484,8 +3490,27 @@ void idGameLocal::zombieSpawn() {
 		
 		int offsetX = random.RandomInt(50) + 50;
 		int offsetY = random.RandomInt(50) + 50;
+		int position = random.RandomInt(3);
+		idVec3 org;
 
-		idVec3 org = idVec3(9223 + offsetX, -6893 + offsetY, 79.13); // TO prevent them from getting stuck inside eachother
+		// TO prevent them from getting stuck inside eachother
+		switch (position) {
+			case 1:
+				org = idVec3(9878 + offsetX, -6798 + offsetY, 100);
+				break;
+
+			case 2:
+				org = idVec3(10357 + offsetX, -6450 + offsetY, 70);
+				break;
+
+			case 3:
+				org = idVec3(9996 + offsetX, -7068 + offsetY, 55);
+
+			default:
+				org = idVec3(9223 + offsetX, -6893 + offsetY, 75.13);
+				break;
+
+		}
 		float yaw = player->viewAngles.yaw;
 		idEntity *newEnt = NULL;
 		dict.Set("classname", "monster_berserker");
@@ -3515,19 +3540,19 @@ void idGameLocal::zombieBuyWeapon(ZWeapon weapon) {
 				machineGunUpgraded = true;
 			}
 			break;
-		case ZWEAPON_SHOTGUN:
+		case ZWEAPON_NAILGUN:
 			if (playerPoints >= 500) {
 				playerPoints -= 500;
 				for (int i = 0; i < 10; i++)
-					GiveStuffToPlayer(player, "weapon_shotgun", "1");
+					GiveStuffToPlayer(player, "weapon_nailgun", "1");
 			}
 			break;
-		case ZWEAPON_SHOTGUN_UPGRADED:
-			if (playerPoints >= 1200 && !shotgunUpgraded) {
+		case ZWEAPON_NAILGUN_UPGRADED:
+			if (playerPoints >= 1200 && !nailGunUpgraded) {
 				playerPoints -= 1200;
 				for (int i = 0; i < 10; i++)
-					GiveStuffToPlayer(player, "weapon_shotgun", "1");
-				shotgunUpgraded = true;
+					GiveStuffToPlayer(player, "weapon_nailgun", "1");
+				nailGunUpgraded = true;
 			}
 			break;
 
@@ -3584,14 +3609,21 @@ void idGameLocal::zombieRoundUpdate() {
 	idPlayer *player = GetLocalPlayer();
 	idUserInterface* hud = player->GetHud();
 	bool allDead = true;
+	int num_alive = 0;
 	for (int i = 0; i < MAX_GENTITIES; i++) {
 		idEntity *zombie = this->zombies[i];
 		if (zombie) {
 			if (zombie->health > 0) {
+				const renderView_t *view = zombie->GetRenderView();
+				Printf("(%s) %.1f ", view->vieworg.ToString(), view->viewaxis[0].ToYaw());
+				Printf("IS ACTIVE: %i HEALTH: %i\n", zombie->IsActive(), zombie->health);
+				num_alive++;
 				allDead = false;
 			}
 		}
 	}
+
+	Printf("NUM ALIVE: %i\n", num_alive);
 
 	// Frankie: Set new item pickup menu to show round number and points
 	idStr information;
@@ -3602,12 +3634,12 @@ void idGameLocal::zombieRoundUpdate() {
 
 	if (allDead) {
 
-		if (this->zombieRoundOn == 0){
+		if (this->zombieRoundOn == 0) {
 			// Builds buy menu in the objective prompt
 			idObjectiveInfo info; 
 			info.title = common->GetLocalizedString("BUY MENU (Regular, Upgraded)");
 			info.text = common->GetLocalizedString("Machine Gun: y (300) h (1k)\n\
-Shotgun: p (500) \; (1.2k)\n\
+Nailgun: p (500) \; (1.2k)\n\
 Hyper Blaster: u (1k) j (2k)\n\
 Rocket Launcher: i (1.3k) k (2.5k)\n\
 Grenade Launcher: o (1.1k) l (1.5k)\n");
@@ -3617,17 +3649,11 @@ Grenade Launcher: o (1.1k) l (1.5k)\n");
 
 			player->health = 100; // Set player health to 100 to start.
 		}
-		//if (zombieRoundEnd <= 0) {
-			this->zombieRoundOn++;
-			zombieSpawn();
-		//}
-		//else {
-		//	this->zombieRoundEnd--;
-		//}
+			
+		this->zombieRoundOn++;
+		zombieSpawn();
+
 	}
-	/*else {
-		this->zombieRoundEnd = 1000;
-	}*/
 }
 
 // Frankie: End

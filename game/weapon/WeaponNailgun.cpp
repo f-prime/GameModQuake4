@@ -666,12 +666,12 @@ stateResult_t rvWeaponNailgun::State_Fire( const stateParms_t& parms ) {
 				PlayCycle ( ANIMCHANNEL_LEGS, "fire_slow", 4 );
 			}
 
-			if ( wsfl.zoom ) {				
+			if ( !gameLocal.nailGunUpgraded ) {				
 				Attack ( true, 1, spread, 0.0f, 1.0f );
 				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			} else {
-				Attack ( false, 1, spread, 0.0f, 1.0f );
-				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
+				Attack ( true, 10, 3, 0.0f, 1.5f );
+				nextAttackTime = gameLocal.time + 30;//(fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			}
 			
 			// Play the exhaust effects

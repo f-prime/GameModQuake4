@@ -8509,10 +8509,10 @@ void idPlayer::PerformImpulse( int impulse ) {
 			gameLocal.zombieBuyWeapon(ZWEAPON_GRENADE_LAUNCHER_UPGRADED);
 			break;
 		case 84:
-			gameLocal.zombieBuyWeapon(ZWEAPON_SHOTGUN);
+			gameLocal.zombieBuyWeapon(ZWEAPON_NAILGUN);
 			break;
 		case 85:
-			gameLocal.zombieBuyWeapon(ZWEAPON_SHOTGUN_UPGRADED);
+			gameLocal.zombieBuyWeapon(ZWEAPON_NAILGUN_UPGRADED);
 			break;
 
 		// Frankie: End
