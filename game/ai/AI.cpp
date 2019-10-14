@@ -1731,27 +1731,29 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 	}
 
 	// Frankie: Drop item
-	
-	idVec3		org;
-	idDict		dict;
 
-	dict.Set("classname", "weaponmod_shotgun_ammo");
-	dict.Set("angle", va("%f", 90));
+	if (this->GetPhysics() && gameLocal.random.RandomInt(100) < 10) {
+		idVec3		org;
+		idDict		dict;
 
-	org = this->GetPhysics()->GetOrigin();
-	dict.Set("origin", org.ToString());
+		dict.Set("classname", "weaponmod_shotgun_ammo");
+		dict.Set("angle", va("%f", 90));
 
-	idEntity *newEnt = NULL;
-	gameLocal.SpawnEntityDef(dict, &newEnt);
+		org = this->GetPhysics()->GetOrigin();
+		dict.Set("origin", org.ToString());
 
-	if (newEnt)	{
-		gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
+		idEntity *newEnt = NULL;
+		gameLocal.SpawnEntityDef(dict, &newEnt);
+
+		if (newEnt)	{
+			gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
+		}
+
 	}
 
-	
 	// Frankie: End
 
-	gameLocal.playerPoints += 25; // Frankie: Increase points when AI dies
+	gameLocal.playerPoints += 25 * ( gameLocal.doublePoints ? 2 : 1); // Frankie: Increase points when AI dies
 	SetState ( "State_Killed" );
 
 	kv = spawnArgs.MatchPrefix( "def_drops", NULL );

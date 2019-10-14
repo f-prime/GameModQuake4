@@ -3473,9 +3473,10 @@ void idGameLocal::zombieRestart() {
 	napalmGunUpgraded = false;
 
 	playerPoints = 0;
-	playerLasthealthRegen = 0;
 	zombieRoundOn = 0;
 	zombieRoundEnd = 0;
+	lastRegenHealth = 0;
+	lastRegenShield = 0;
 
 	doubleHealth = false;
 	healthRegen = false;
@@ -3483,9 +3484,9 @@ void idGameLocal::zombieRestart() {
 	regenShield = false;
 	doublePoints = false;
 
-	for (int i = 0; i < MAX_GENTITIES; i++) {
+	//for (int i = 0; i < MAX_GENTITIES; i++) {
 		//zombies[i] = NULL;
-	}
+	//}
 }
 
 void idGameLocal::zombieSpawn() {
@@ -3659,6 +3660,30 @@ Grenade Launcher: o (1.1k) l (1.5k)\n");
 		this->zombieRoundOn++;
 		zombieSpawn();
 
+	}
+
+	// Regen Stuff
+
+	if (healthRegen) {
+		if (lastRegenHealth <= 0 && player->health < player->inventory.maxHealth) {
+			player->health++;
+			lastRegenHealth = 60;
+		}
+		else {
+			if (lastRegenHealth > 0)
+				lastRegenHealth--;
+		}
+	} 
+
+	if (regenShield) {
+		if (lastRegenShield <= 0 && player->inventory.armor < player->inventory.maxarmor) {
+			player->inventory.armor++;
+			lastRegenShield = 60;
+		}
+		else {
+			if (lastRegenShield > 0)
+				lastRegenShield--;
+		}
 	}
 }
 

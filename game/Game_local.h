@@ -340,7 +340,6 @@ enum ZWeapon {
 class idGameLocal : public idGame {
 public:
 	// Frankie: Start
-	int						playerLasthealthRegen;		// Frankie: Timer for when to regen health
 	int						playerPoints;				// Frankie: Points accumuated
 	int						zombieRoundOn;				// Frankie: Zombie round currently on
 	int					    zombieRoundEnd;				// Frankie: Zombie time round ended
@@ -356,10 +355,14 @@ public:
 	bool					darkMatterGunUpgraded;		// Frankie
 	bool					napalmGunUpgraded;			// Frankie
 
+	// Drops
+
 	bool					doubleHealth;
 	bool					healthRegen;
+	int						lastRegenHealth;
 	bool					doubleAmmo;
 	bool					regenShield;
+	int						lastRegenShield;
 	bool					doublePoints;
 
 	idEntity *				zombies[MAX_GENTITIES];     // Frankie: List of zombies 

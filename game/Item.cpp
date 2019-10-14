@@ -967,6 +967,44 @@ void idItem::Event_Touch( idEntity *other, trace_t *trace ) {
 
 	// Frankie: Hijack Pickup function
 	gameLocal.Printf("PICKING UP ITEM!!!\n");
+
+	int randomDrop = gameLocal.random.RandomInt(100);
+	idPlayer *player = gameLocal.GetLocalPlayer();
+
+	if (randomDrop < 30) {
+		gameLocal.Printf("DOUBLE HEALTH\n");
+		if (!gameLocal.doubleHealth) {
+			player->inventory.maxHealth *= 2;
+			player->health = player->inventory.maxHealth;
+		}
+		gameLocal.doubleHealth = true;
+		
+	}
+	else if (randomDrop < 40) {
+		gameLocal.Printf("HEALTH REGEN\n");
+		gameLocal.healthRegen = true;
+	}
+	else if (randomDrop < 60) {
+		gameLocal.Printf("DOUBLE AMMO");
+		if (!gameLocal.doubleAmmo) {
+			for (int i = 0; i < MAX_AMMO; i++) {
+				player->inventory.ammo[i] *= 2;
+			}
+		}
+		gameLocal.doubleAmmo = true;
+	}
+	else if (randomDrop < 70) {
+		gameLocal.Printf("REGEN SHIELD\n");
+		if (!gameLocal.regenShield) {
+			player->inventory.armor = 100;
+		}
+		gameLocal.regenShield = true;
+	}
+	else {
+		gameLocal.Printf("DOUBLE POINTS\n");
+		gameLocal.doublePoints = true;
+	}
+	
 	//return true;
 	// Frankie: End
 
