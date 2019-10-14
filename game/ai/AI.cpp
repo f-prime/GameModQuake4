@@ -1730,6 +1730,27 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 		}
 	}
 
+	// Frankie: Drop item
+	
+	idVec3		org;
+	idDict		dict;
+
+	dict.Set("classname", "weaponmod_shotgun_ammo");
+	dict.Set("angle", va("%f", 90));
+
+	org = this->GetPhysics()->GetOrigin();
+	dict.Set("origin", org.ToString());
+
+	idEntity *newEnt = NULL;
+	gameLocal.SpawnEntityDef(dict, &newEnt);
+
+	if (newEnt)	{
+		gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
+	}
+
+	
+	// Frankie: End
+
 	gameLocal.playerPoints += 25; // Frankie: Increase points when AI dies
 	SetState ( "State_Killed" );
 

@@ -356,6 +356,12 @@ public:
 	bool					darkMatterGunUpgraded;		// Frankie
 	bool					napalmGunUpgraded;			// Frankie
 
+	bool					doubleHealth;
+	bool					healthRegen;
+	bool					doubleAmmo;
+	bool					regenShield;
+	bool					doublePoints;
+
 	idEntity *				zombies[MAX_GENTITIES];     // Frankie: List of zombies 
 	virtual void			zombieRoundUpdate();		// Frankie: Zombie round update function
 	virtual void			zombieSpawn();				// Frankie: Spawn Zombie

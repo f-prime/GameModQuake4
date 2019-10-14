@@ -630,7 +630,7 @@ void idItem::SendPickupMsg( int clientNum ) {
 idItem::Pickup
 ================
 */
-bool idItem::Pickup( idPlayer *player ) {
+bool idItem::Pickup( idPlayer *player ) {	
 	//dropped weapon?
 	bool dropped = spawnArgs.GetBool( "dropped" );
 
@@ -960,9 +960,16 @@ void idItem::Event_Touch( idEntity *other, trace_t *trace ) {
 		return;
 	}
 
-	if ( !canPickUp ) {
-		return;
-	}
+	// Frankie: COmmented out
+	//if ( !canPickUp ) {
+	//	return;
+	//}
+
+	// Frankie: Hijack Pickup function
+	gameLocal.Printf("PICKING UP ITEM!!!\n");
+	//return true;
+	// Frankie: End
+
 
 	Pickup( static_cast<idPlayer *>(other) );
 }
@@ -973,10 +980,14 @@ idItem::Event_Trigger
 ================
 */
 void idItem::Event_Trigger( idEntity *activator ) {
-	if ( !canPickUp && spawnArgs.GetBool( "triggerFirst" ) ) {
-		canPickUp = true;
-		return;
-	}
+	// Frankie: Commented out
+	
+	//if ( !canPickUp && spawnArgs.GetBool( "triggerFirst" ) ) {
+	//	canPickUp = true;
+	//	return;
+	//}
+
+	canPickUp = true;
 
 // RAVEN BEGIN
 // jnewquist: Use accessor for static class type 

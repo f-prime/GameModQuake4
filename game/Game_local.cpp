@@ -3477,6 +3477,12 @@ void idGameLocal::zombieRestart() {
 	zombieRoundOn = 0;
 	zombieRoundEnd = 0;
 
+	doubleHealth = false;
+	healthRegen = false;
+	doubleAmmo = false;
+	regenShield = false;
+	doublePoints = false;
+
 	for (int i = 0; i < MAX_GENTITIES; i++) {
 		//zombies[i] = NULL;
 	}
@@ -3615,15 +3621,15 @@ void idGameLocal::zombieRoundUpdate() {
 		if (zombie) {
 			if (zombie->health > 0) {
 				const renderView_t *view = zombie->GetRenderView();
-				Printf("(%s) %.1f ", view->vieworg.ToString(), view->viewaxis[0].ToYaw());
-				Printf("IS ACTIVE: %i HEALTH: %i\n", zombie->IsActive(), zombie->health);
+				//Printf("(%s) %.1f ", view->vieworg.ToString(), view->viewaxis[0].ToYaw());
+				//Printf("IS ACTIVE: %i HEALTH: %i\n", zombie->IsActive(), zombie->health);
 				num_alive++;
 				allDead = false;
 			}
 		}
 	}
 
-	Printf("NUM ALIVE: %i\n", num_alive);
+	//Printf("NUM ALIVE: %i\n", num_alive);
 
 	// Frankie: Set new item pickup menu to show round number and points
 	idStr information;
