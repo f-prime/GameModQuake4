@@ -3531,6 +3531,7 @@ void idGameLocal::zombieSpawn() {
 
 void idGameLocal::zombieBuyWeapon(ZWeapon weapon) {
 	idPlayer *player = GetLocalPlayer();
+
 	switch (weapon) {
 		case ZWEAPON_MG: 
 			if (playerPoints >= 300) {

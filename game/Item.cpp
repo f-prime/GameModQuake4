@@ -966,14 +966,14 @@ void idItem::Event_Touch( idEntity *other, trace_t *trace ) {
 	//}
 
 	// Frankie: Hijack Pickup function
-	gameLocal.Printf("PICKING UP ITEM!!!\n");
 
 	int randomDrop = gameLocal.random.RandomInt(100);
 	idPlayer *player = gameLocal.GetLocalPlayer();
 
 	if (randomDrop < 30) {
-		gameLocal.Printf("DOUBLE HEALTH\n");
 		if (!gameLocal.doubleHealth) {
+			gameLocal.Printf("DOUBLE HEALTH\n");
+			player->GivePowerUp(POWERUP_INVISIBILITY, SEC2MS(8600));
 			player->inventory.maxHealth *= 2;
 			player->health = player->inventory.maxHealth;
 		}
@@ -981,31 +981,30 @@ void idItem::Event_Touch( idEntity *other, trace_t *trace ) {
 		
 	}
 	else if (randomDrop < 40) {
-		gameLocal.Printf("HEALTH REGEN\n");
+		player->GivePowerUp(POWERUP_REGENERATION, SEC2MS(8600));
 		gameLocal.healthRegen = true;
 	}
 	else if (randomDrop < 60) {
-		gameLocal.Printf("DOUBLE AMMO");
 		if (!gameLocal.doubleAmmo) {
+			player->GivePowerUp(POWERUP_DOUBLER, SEC2MS(8600));
 			for (int i = 0; i < MAX_AMMO; i++) {
 				player->inventory.ammo[i] *= 2;
 			}
 		}
 		gameLocal.doubleAmmo = true;
 	}
-	else if (randomDrop < 70) {
-		gameLocal.Printf("REGEN SHIELD\n");
+	else if (randomDrop < 70) {;
 		if (!gameLocal.regenShield) {
+			player->GivePowerUp(POWERUP_GUARD, SEC2MS(8600));
 			player->inventory.armor = 100;
 		}
 		gameLocal.regenShield = true;
 	}
 	else {
-		gameLocal.Printf("DOUBLE POINTS\n");
+		player->GivePowerUp(POWERUP_HASTE, SEC2MS(8600));
 		gameLocal.doublePoints = true;
 	}
 	
-	//return true;
 	// Frankie: End
 
 

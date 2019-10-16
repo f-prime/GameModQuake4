@@ -4459,9 +4459,13 @@ void idPlayer::StartPowerUpEffect( int powerup ) {
 		}
 		
 		case POWERUP_INVISIBILITY: {
-			powerUpOverlay = invisibilityOverlay;
+			// Frankie: Don't change skin
 
-			powerUpSkin = declManager->FindSkin( spawnArgs.GetString( "skin_invisibility" ), false );
+			//powerUpOverlay = invisibilityOverlay;
+			//powerUpSkin = declManager->FindSkin( spawnArgs.GetString( "skin_invisibility" ), false );
+			
+			//Frankie: End
+
 			break;
 		}
 
@@ -4860,7 +4864,9 @@ void idPlayer::UpdatePowerUps( void ) {
 					hud->SetStateInt( "powerup_flag_visible", 1 );
 				} else {
 					hud->SetStateString ( va("powerup%d_icon", index ), GetPowerupDef(i)->dict.GetString ( "inv_icon" ) );
-					hud->SetStateString ( va("powerup%d_time", index ), inventory.powerupEndTime[i] == -1 ? "" : va( "%d" , (int)MS2SEC(inventory.powerupEndTime[i] - gameLocal.time) + 1 ) );
+					// Frankie: Hide countdown
+					//hud->SetStateString ( va("powerup%d_time", index ), inventory.powerupEndTime[i] == -1 ? "" : va( "%d" , (int)MS2SEC(inventory.powerupEndTime[i] - gameLocal.time) + 1 ) );
+					hud->SetStateString(va("powerup%d_time", index), "");
 					hud->SetStateInt ( va( "powerup%d_visible", index ), 1 );
 					index++;
 				}
@@ -4869,14 +4875,22 @@ void idPlayer::UpdatePowerUps( void ) {
 			continue;
 		} else if ( inventory.powerupEndTime[ i ] != -1 && gameLocal.isServer ) {
 			// This particular powerup needs to respawn in a special way.
+			// Frankie: Prevent countdown
+
+			/*
 			if ( i == POWERUP_DEADZONE ) {
 				gameLocal.mpGame.GetGameState()->SpawnDeadZonePowerup();
 			}
 			// Powerup time has run out so take it away from the player
 			ClearPowerup( i );
+			*/
+
+			// Frankie: End
 		}
 	}
 
+	// Frankie: Prevent Texture
+	/*
 	// PLay wear off sound?
 	if ( gameLocal.isNewFrame && wearoff != -1 ) {
 		if ( (inventory.powerupEndTime[wearoff] - gameLocal.time) < POWERUP_BLINKS * POWERUP_BLINK_TIME ) {
@@ -4964,7 +4978,6 @@ void idPlayer::UpdatePowerUps( void ) {
 			inventory.armor--;
 		}		
 	}
-		
 	// Assign the powerup skin as long as we are alive
  	if ( health > 0 ) {
  		if ( powerUpSkin ) {
@@ -5042,6 +5055,10 @@ void idPlayer::UpdatePowerUps( void ) {
 	if( arenaEffect ) {
 		arenaEffect->SetOrigin( vec3_zero );
 	}
+
+	*/
+
+	// Frankie: End
 }
 
 /*
