@@ -3472,7 +3472,7 @@ void idGameLocal::zombieRestart() {
 	darkMatterGunUpgraded = false;
 	napalmGunUpgraded = false;
 
-	playerPoints = 0;
+	playerPoints = 1000;
 	zombieRoundOn = 0;
 	zombieRoundEnd = 0;
 	lastRegenHealth = 0;

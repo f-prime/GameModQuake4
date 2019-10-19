@@ -892,7 +892,7 @@ void idItem::Event_Pickup( int clientNum ) {
 	idPlayer *player;
 
 	assert( gameLocal.isClient );
-	
+
 	// play pickup sound
 	if ( !spawnArgs.GetBool( "globalAcquireSound" ) ) {
 		StartSound( "snd_acquire", SND_CHANNEL_ITEM, 0, false, NULL );
@@ -960,53 +960,52 @@ void idItem::Event_Touch( idEntity *other, trace_t *trace ) {
 		return;
 	}
 
+	// Frankie: Hijack Pickup function
+
+	if (spawnArgs.FindKeyIndex("weaponclass") == -1) { // Make sure we aren't giving the player a weapon. Just an "item" because this function also gets triggered when a player buys a weapon.
+		int randomDrop = gameLocal.random.RandomInt(100);
+		idPlayer *player = gameLocal.GetLocalPlayer();
+
+		if (randomDrop < 30) {
+			if (!gameLocal.doubleHealth) {
+				player->GivePowerUp(POWERUP_INVISIBILITY, SEC2MS(86000));
+				player->inventory.maxHealth *= 2;
+				player->health = player->inventory.maxHealth;
+			}
+			gameLocal.doubleHealth = true;
+
+		}
+		else if (randomDrop < 40) {
+			player->GivePowerUp(POWERUP_REGENERATION, SEC2MS(860000));
+			gameLocal.healthRegen = true;
+		}
+		else if (randomDrop < 60) {
+			if (!gameLocal.doubleAmmo) {
+				player->GivePowerUp(POWERUP_HASTE, SEC2MS(86000));
+				for (int i = 0; i < MAX_AMMO; i++) {
+					player->inventory.ammo[i] *= 2;
+				}
+			}
+			gameLocal.doubleAmmo = true;
+		}
+		else if (randomDrop < 70) {
+			if (!gameLocal.regenShield) {
+				player->GivePowerUp(POWERUP_GUARD, SEC2MS(86000));
+				player->inventory.armor = 100;
+			}
+			gameLocal.regenShield = true;
+		}
+		else {
+			player->GivePowerUp(POWERUP_DOUBLER, SEC2MS(86000));
+			gameLocal.doublePoints = true;
+		}
+	}
+	// Frankie: End
+
 	// Frankie: COmmented out
 	//if ( !canPickUp ) {
 	//	return;
 	//}
-
-	// Frankie: Hijack Pickup function
-
-	int randomDrop = gameLocal.random.RandomInt(100);
-	idPlayer *player = gameLocal.GetLocalPlayer();
-
-	if (randomDrop < 30) {
-		if (!gameLocal.doubleHealth) {
-			gameLocal.Printf("DOUBLE HEALTH\n");
-			player->GivePowerUp(POWERUP_INVISIBILITY, SEC2MS(8600));
-			player->inventory.maxHealth *= 2;
-			player->health = player->inventory.maxHealth;
-		}
-		gameLocal.doubleHealth = true;
-		
-	}
-	else if (randomDrop < 40) {
-		player->GivePowerUp(POWERUP_REGENERATION, SEC2MS(8600));
-		gameLocal.healthRegen = true;
-	}
-	else if (randomDrop < 60) {
-		if (!gameLocal.doubleAmmo) {
-			player->GivePowerUp(POWERUP_DOUBLER, SEC2MS(8600));
-			for (int i = 0; i < MAX_AMMO; i++) {
-				player->inventory.ammo[i] *= 2;
-			}
-		}
-		gameLocal.doubleAmmo = true;
-	}
-	else if (randomDrop < 70) {;
-		if (!gameLocal.regenShield) {
-			player->GivePowerUp(POWERUP_GUARD, SEC2MS(8600));
-			player->inventory.armor = 100;
-		}
-		gameLocal.regenShield = true;
-	}
-	else {
-		player->GivePowerUp(POWERUP_HASTE, SEC2MS(8600));
-		gameLocal.doublePoints = true;
-	}
-	
-	// Frankie: End
-
 
 	Pickup( static_cast<idPlayer *>(other) );
 }

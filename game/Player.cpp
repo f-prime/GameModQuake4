@@ -4655,6 +4655,9 @@ bool idPlayer::GivePowerUp( int powerup, int time, bool team ) {
 	bool playClientEffects = ( ( gameLocal.GetDemoState() == DEMO_PLAYING && gameLocal.IsServerDemo() && instance == 0 ) ||
 							   ( gameLocal.GetLocalPlayer() && gameLocal.GetLocalPlayer()->GetInstance() == instance ) );
 
+	// Frankie: Don't apply real powerup
+
+	/*
 	switch( powerup ) {
 		case POWERUP_CTF_MARINEFLAG: {
 			// shouchard:  added notice for picking up the flag
@@ -4752,10 +4755,12 @@ bool idPlayer::GivePowerUp( int powerup, int time, bool team ) {
 //RITUAL END
 	}
 
+	*/
 	// only start effects if in our instances and snapshot
 	if ( playClientEffects && !fl.networkStale ) {
 		StartPowerUpEffect( powerup );
 	}
+
 
 	return true;
 }
@@ -4866,7 +4871,21 @@ void idPlayer::UpdatePowerUps( void ) {
 					hud->SetStateString ( va("powerup%d_icon", index ), GetPowerupDef(i)->dict.GetString ( "inv_icon" ) );
 					// Frankie: Hide countdown
 					//hud->SetStateString ( va("powerup%d_time", index ), inventory.powerupEndTime[i] == -1 ? "" : va( "%d" , (int)MS2SEC(inventory.powerupEndTime[i] - gameLocal.time) + 1 ) );
-					hud->SetStateString(va("powerup%d_time", index), "");
+					
+					idStr name = "";
+					
+					if (i == POWERUP_INVISIBILITY)
+						name = "DH";
+					else if (i == POWERUP_REGENERATION)
+						name = "HR";
+					else if (i == POWERUP_HASTE)
+						name = "DA";
+					else if (i == POWERUP_GUARD)
+						name = "SH";
+					else if (i == POWERUP_DOUBLER)
+						name = "DP";
+
+					hud->SetStateString(va("powerup%d_time", index), name);
 					hud->SetStateInt ( va( "powerup%d_visible", index ), 1 );
 					index++;
 				}
