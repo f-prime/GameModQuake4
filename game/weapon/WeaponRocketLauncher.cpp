@@ -447,8 +447,8 @@ stateResult_t rvWeaponRocketLauncher::State_Fire ( const stateParms_t& parms ) {
 	case STAGE_INIT:
 			// Frankie: Upgraded RL
 			if (gameLocal.rocketLauncherUpgraded) {
-				nextAttackTime = gameLocal.time + 5; // (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
-				Attack(false, 5, 8, 0, 1.5f);
+				nextAttackTime = gameLocal.time + 1; // (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+				Attack(false, 10, 5, 0, 2.0f);
 			}
 			else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));

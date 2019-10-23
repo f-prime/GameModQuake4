@@ -4879,7 +4879,7 @@ void idPlayer::UpdatePowerUps( void ) {
 					else if (i == POWERUP_REGENERATION)
 						name = "HR";
 					else if (i == POWERUP_HASTE)
-						name = "DA";
+						name = "SP";
 					else if (i == POWERUP_GUARD)
 						name = "SH";
 					else if (i == POWERUP_DOUBLER)

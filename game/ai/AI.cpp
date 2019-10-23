@@ -1735,19 +1735,24 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 	if (this->GetPhysics() && gameLocal.random.RandomInt(100) < 10) {
 		idVec3		org;
 		idDict		dict;
-
+		gameLocal.Printf("1\n");
 		dict.Set("classname", "weaponmod_shotgun_ammo");
+		gameLocal.Printf("2\n");
 		dict.Set("angle", va("%f", 90));
-
+		gameLocal.Printf("3\n");
 		org = this->GetPhysics()->GetOrigin();
+		gameLocal.Printf("4\n");
 		dict.Set("origin", org.ToString());
-
+		gameLocal.Printf("5\n");
 		idEntity *newEnt = NULL;
+		gameLocal.Printf("6\n");
 		gameLocal.SpawnEntityDef(dict, &newEnt);
-
+		gameLocal.Printf("7\n");
 		if (newEnt)	{
 			gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
 		}
+		gameLocal.Printf("8\n"); 
+		gameLocal.Printf("\n");
 
 	}
 

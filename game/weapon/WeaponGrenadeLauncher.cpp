@@ -146,8 +146,8 @@ stateResult_t rvWeaponGrenadeLauncher::State_Fire ( const stateParms_t& parms ) 
 		case STAGE_INIT:
 			// Frankie: Upgraded GL
 			if (gameLocal.grenadeLauncherUpgraded) {
-				nextAttackTime = gameLocal.time + 30; // (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
-				Attack(false, 10, 5, 0, 2.0f);
+				nextAttackTime = gameLocal.time + 200; // (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+				Attack(false, 3, 5, 0, 2.0f);
 			}
 			else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
