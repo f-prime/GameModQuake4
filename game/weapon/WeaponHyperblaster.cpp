@@ -230,7 +230,7 @@ stateResult_t rvWeaponHyperblaster::State_Fire ( const stateParms_t& parms ) {
 			SpinUp ( );
 			// Frankie: Upgraded HB
 			if (gameLocal.hyperBlasterUpgraded) {
-				nextAttackTime = gameLocal.time + 5;
+				nextAttackTime = gameLocal.time + 90;
 				Attack(false, 15, 8, 0, 2.0f);
 			}
 			else {

@@ -671,7 +671,7 @@ stateResult_t rvWeaponNailgun::State_Fire( const stateParms_t& parms ) {
 				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			} else {
 				Attack ( true, 10, 3, 0.0f, 1.5f );
-				nextAttackTime = gameLocal.time + 30;//(fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
+				nextAttackTime = gameLocal.time + 50;//(fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			}
 			
 			// Play the exhaust effects

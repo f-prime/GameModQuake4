@@ -984,7 +984,7 @@ void idItem::Event_Touch( idEntity *other, trace_t *trace ) {
 		else if (randomDrop < 60) {
 			if (!gameLocal.doubleAmmo) {
 				player->GivePowerUp(POWERUP_HASTE, SEC2MS(seconds));
-				pm_speed.SetInteger(pm_speed.GetInteger() * 3);
+				pm_speed.SetInteger(pm_speed.GetInteger() * 2);
 			}
 			gameLocal.doubleAmmo = true;
 		}

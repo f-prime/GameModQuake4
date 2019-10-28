@@ -3472,7 +3472,7 @@ void idGameLocal::zombieRestart() {
 	darkMatterGunUpgraded = false;
 	napalmGunUpgraded = false;
 
-	playerPoints = 2000;
+	playerPoints = 20000;
 	zombieRoundOn = 0;
 	zombieRoundEnd = 0;
 	lastRegenHealth = 0;
@@ -3520,13 +3520,14 @@ void idGameLocal::zombieSpawn() {
 		}
 		float yaw = player->viewAngles.yaw;
 		idEntity *newEnt = NULL;
-		//dict.Set("classname", "monster_berserker");
-		dict.Set("classname", "monster_strogg_marine");
+		dict.Set("classname", "monster_berserker");
+		//dict.Set("classname", "monster_strogg_marine");
 		dict.Set("angle", va("%f", yaw + 180));
 		dict.Set("origin", org.ToString());
 		SpawnEntityDef(dict, &newEnt);
 		newEnt->health = 5 * this->zombieRoundOn;
 		this->zombies[i] = newEnt;
+
 	}
 }
 

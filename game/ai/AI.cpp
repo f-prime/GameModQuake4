@@ -1732,28 +1732,8 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 
 	// Frankie: Drop item
 
-	if (this->GetPhysics() && gameLocal.random.RandomInt(100) < 10) {
-		idVec3		org;
-		idDict		dict;
-		gameLocal.Printf("1\n");
-		dict.Set("classname", "weaponmod_shotgun_ammo");
-		gameLocal.Printf("2\n");
-		dict.Set("angle", va("%f", 90));
-		gameLocal.Printf("3\n");
-		org = this->GetPhysics()->GetOrigin();
-		gameLocal.Printf("4\n");
-		dict.Set("origin", org.ToString());
-		gameLocal.Printf("5\n");
-		idEntity *newEnt = NULL;
-		gameLocal.Printf("6\n");
-		gameLocal.SpawnEntityDef(dict, &newEnt);
-		gameLocal.Printf("7\n");
-		if (newEnt)	{
-			gameLocal.Printf("spawned entity '%s'\n", newEnt->name.c_str());
-		}
-		gameLocal.Printf("8\n"); 
-		gameLocal.Printf("\n");
-
+	if (this->GetPhysics() && gameLocal.random.RandomInt(100) < 90) {
+		spawnArgs.Set("def_dropsItem1", "weaponmod_shotgun_ammo");
 	}
 
 	// Frankie: End
@@ -3712,20 +3692,23 @@ void idAI::OnDeath( void ){
 
 	ExecScriptFunction( funcs.death );
 
-/* DONT DROP ANYTHING FOR NOW
+	/*
+
 	float rVal = gameLocal.random.RandomInt( 100 );
 
 	if( spawnArgs.GetFloat( "no_drops" ) >= 1.0 ){
 		spawnArgs.Set( "def_dropsItem1", "" );
 	}else{
 		// Fixme!  Better guys should drop better stuffs!  Make drops related to guy type?  Do something cooler here?
+		
 		if( rVal < 25 ){	// Half of guys drop nothing?
 			spawnArgs.Set( "def_dropsItem1", "" );
 		}else if( rVal < 50 ){
 			spawnArgs.Set( "def_dropsItem1", "item_health_small" );
 		}
 	}
-*/
+
+	*/
 }
 
 /*
