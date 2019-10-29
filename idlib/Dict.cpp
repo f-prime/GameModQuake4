@@ -181,15 +181,14 @@ idDict::Clear
 */
 void idDict::Clear( void ) {
 	int i;
-
-	for( i = 0; i < args.Num(); i++ ) {
-		globalKeys.FreeString( args[i].key );
-		globalValues.FreeString( args[i].value );
+	for (i = 0; i < args.Num(); i++) {
+		globalKeys.FreeString(args[i].key);
+		globalValues.FreeString(args[i].value);
 	}
 
 	args.Clear();
 	argHash.Free();
-}
+}	
 
 /*
 ================
